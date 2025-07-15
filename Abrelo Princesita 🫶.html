@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi amor</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #ff6b6b, #4a00e0);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+        .tree {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            background:
+            background-size: contain;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .message {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            color: #ff1493;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .message.show {
+            opacity: 1;
+        }
+        .petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        h1 {
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #c71585;
+        }
+    </style>
+</head>
+<body>
+    <h1>Te amo Mon, el amor de mis vidas...</h1>
+    <div class="tree" id="tree"></div>
+    <button onclick="showMessages()">Mostrar mensajes</button>
+   
+ <script>
+        const messages = [
+            { text: "Eres mi sol en los dias nublados.", x: -100, y: 50 },
+            { text: "Vivo completamente enamorado de cada parte en ti", x: 120, y: 80 },
+            { text: "Eres una chingona, tu puedes con todo estoy muy orgulloso de ti mi amor", x: -120, y: 150 },
+            { text: "Te amo como nunca he amado y nunca amare a nadie mas", x: 100, y: 200 },
+            { text: "Feliz jueves 10 mi amor....", x: -80, y: 250 }
+        ];
+
+        const tree = document.getElementById('tree');
+        
+        // Create messages
+        messages.forEach((msg, index) => {
+            const div = document.createElement('div');
+            div.className = 'message';
+            div.style.left = `calc(50% + ${msg.x}px)`;
+            div.style.top = `${msg.y}px`;
+            div.innerText = msg.text;
+            tree.appendChild(div);
+        });
+
+        // Show messages one by one
+        let currentMessage = 0;
+        function showMessages() {
+            const messageDivs = document.querySelectorAll('.message');
+            if (currentMessage < messageDivs.length) {
+                messageDivs[currentMessage].classList.add('show');
+                currentMessage++;
+                setTimeout(showMessages, 2000);
+            }
+        }
+
+        // Create falling petals
+        for (let i = 0; i < 20; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+            document.body.appendChild(petal);
+        }
+
+        // Create twinkling stars
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            document.body.appendChild(star);
+        }
+    </script>
+</body>
+</html>
